@@ -1,888 +1,330 @@
-\# DocMind AI
-
-
-
-\## Enterprise Document Intelligence Platform
-
-
-
-DocMind AI is an enterprise-focused document intelligence platform that allows organizations to securely upload documents, process them through a Retrieval-Augmented Generation (RAG) pipeline, and ask questions about their internal knowledge.
-
-
-
-The platform is designed around \*\*multi-tenancy, role-based access control, document processing, RAG, analytics, and AI-powered insights\*\*.
-
-
-
-\---
-
-
-
-\## 🚀 Features
-
-
-
-\### 🔐 Authentication \& Authorization
-
-
-
-\- User registration and login
-
-\- JWT-based authentication
-
-\- Password hashing
-
-\- Role-based access control
-
-\- Admin and Employee roles
-
-\- Protected workspace routes
-
-\- Admin-only management routes
-
-
-
-\### 🏢 Multi-Tenant Architecture
-
-
-
-Each organization has its own isolated workspace.
-
-
-
-\- Organizations are created during registration
-
-\- Users belong to a specific organization
-
-\- Employees are scoped to their organization
-
-\- Organization-specific user IDs
-
-\- Organization-level document ownership
-
-\- Organization-aware backend authorization
-
-
-
-\### 📄 Document Intelligence
-
-
-
-\- PDF document upload
-
-\- Document storage using Supabase Storage
-
-\- Background document processing
-
-\- PDF text extraction
-
-\- Document chunking
-
-\- Embedding generation
-
-\- Vector-based retrieval
-
-
-
-\### 🧠 RAG Pipeline
-
-
-
-DocMind AI uses a Retrieval-Augmented Generation architecture:
-
-
-
-```text
-
-User Question
-
-&#x20;     ↓
-
-Query Processing
-
-&#x20;     ↓
-
-Embedding
-
-&#x20;     ↓
-
-Vector Retrieval
-
-&#x20;     ↓
-
-Relevant Document Chunks
-
-&#x20;     ↓
-
-Context Construction
-
-&#x20;     ↓
-
-LLM
-
-&#x20;     ↓
-
-AI Answer
-
-
-
-The system retrieves relevant information from uploaded organizational documents before generating an answer.
-
-
-
-👥 Employee Management
-
-
-
-Administrators can:
-
-
-
-Create employees
-
-View employees
-
-Assign organization-scoped user IDs
-
-Manage users within their organization
-
-
-
-Employees cannot access administrator-only functionality.
-
-
-
-📊 Admin Analytics
-
-
-
-The platform tracks AI usage and provides administrator analytics such as:
-
-
-
-AI request activity
-
-Request statistics
-
-Usage information
-
-Organization-level analytics
-
-🤖 AI Insights
-
-
-
-DocMind AI also includes an administrator insights section designed to transform AI usage data into useful organizational-level insights.
-
-
-
-🏗️ System Architecture
-
-&#x20;                   ┌─────────────────────┐
-
-&#x20;                   │      Next.js        │
-
-&#x20;                   │      Frontend       │
-
-&#x20;                   └──────────┬──────────┘
-
-&#x20;                              │
-
-&#x20;                              │ REST API
-
-&#x20;                              ▼
-
-&#x20;                   ┌─────────────────────┐
-
-&#x20;                   │       FastAPI       │
-
-&#x20;                   │       Backend       │
-
-&#x20;                   └──────────┬──────────┘
-
-&#x20;                              │
-
-&#x20;            ┌─────────────────┼─────────────────┐
-
-&#x20;            │                 │                 │
-
-&#x20;            ▼                 ▼                 ▼
-
-&#x20;      ┌───────────┐     ┌────────────┐    ┌─────────────┐
-
-&#x20;      │ PostgreSQL│     │  Supabase  │    │    RAG      │
-
-&#x20;      │ Database  │     │  Storage   │    │   Pipeline  │
-
-&#x20;      └───────────┘     └────────────┘    └──────┬──────┘
-
-&#x20;                                                  │
-
-&#x20;                                                  ▼
-
-&#x20;                                           ┌─────────────┐
-
-&#x20;                                           │     LLM     │
-
-&#x20;                                           └─────────────┘
-
-🗄️ Database Architecture
-
-
-
-The main database entities include:
-
-
-
-Organizations
-
-&#x20;     │
-
-&#x20;     ├── Users
-
-&#x20;     │     ├── Admin
-
-&#x20;     │     └── Employees
-
-&#x20;     │
-
-&#x20;     └── Documents
-
-&#x20;             │
-
-&#x20;             └── Document Chunks
-
-&#x20;                     │
-
-&#x20;                     └── Embeddings
-
-
-
-Users
-
-&#x20; │
-
-&#x20; └── AI Requests
-
-Organization-Scoped User IDs
-
-
-
-Each organization maintains its own user numbering system.
-
-
-
-Example:
-
-
-
-Global ID    Organization    Organization User ID
-
-\--------------------------------------------------
-
-1            Organization A          1
-
-2            Organization A          2
-
-3            Organization A          3
-
-
-
-4            Organization B          1
-
-5            Organization B          2
-
-6            Organization B          3
-
-
-
-This allows organizations to have their own internal user identifiers while maintaining globally unique database IDs.
-
-
-
-🛠️ Tech Stack
-
-Frontend
-
-Next.js
-
-React
-
-TypeScript
-
-Tailwind CSS
-
-Backend
-
-Python
-
-FastAPI
-
-SQLAlchemy
-
-Pydantic
-
-Alembic
-
-AI / RAG
-
-LangChain
-
-Retrieval-Augmented Generation (RAG)
-
-Local embeddings
-
-Vector retrieval
-
-Gemini API
-
-Database \& Storage
-
-PostgreSQL
-
-Supabase
-
-Supabase Storage
-
-DevOps
-
-Docker
-
-Git
-
-GitHub
-
-📁 Project Structure
-
+# DocMind AI 🚀
+
+**Enterprise AI Document Intelligence & Multi-Tenant Retrieval-Augmented Generation (RAG) Platform**
+
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688.svg?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.0+-000000.svg?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-4169E1.svg?style=flat-square&logo=postgresql)](https://github.com/pgvector/pgvector)
+[![LangChain](https://img.shields.io/badge/LangChain-LCEL-1C3C3C.svg?style=flat-square)](https://python.langchain.com/)
+[![Google Gemini](https://img.shields.io/badge/Google_Gemini-3.6_Flash-4285F4.svg?style=flat-square&logo=google)](https://ai.google.dev/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+
+---
+
+## 📌 Table of Contents
+
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [System Architecture](#-system-architecture)
+- [Tech Stack](#-tech-stack)
+- [Database Schema & Vector Search](#-database-schema--vector-search)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#1-prerequisites)
+  - [Backend Setup](#2-backend-setup)
+  - [Frontend Setup](#3-frontend-setup)
+- [API Reference](#-api-reference)
+- [Token & Cost Analytics](#-token--cost-analytics)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+---
+
+## 💡 Overview
+
+**DocMind AI** is an end-to-end, enterprise-ready Document Intelligence platform designed to extract, index, and query corporate documents using high-dimensional vector similarity search and context-bounded generative AI. 
+
+Traditional keyword search fails to understand semantic context in complex PDF contracts, policy guidelines, and financial reports. DocMind AI solves this by combining **Multi-Tenant Security**, **PostgreSQL Vector Search (`pgvector`)**, **Google Gemini 3.6 Flash (`gemini-3.6-flash`)**, and **Real-Time Token Cost Tracking** to deliver fast, accurate, hallucination-free answers with precise source chunk attribution.
+
+---
+
+## 🔥 Key Features
+
+- 🏢 **Multi-Tenancy & RBAC**: Strict organization-level data segregation with `ADMIN` and `EMPLOYEE` role-based permissions.
+- ⚡ **Asynchronous Document Ingestion**: Non-blocking PDF uploads to Supabase Storage with FastAPI background workers processing PDF extraction and chunking.
+- 🎯 **Advanced Vector Processing**: PDF parsing via `PyPDFLoader`, hierarchical splitting via `RecursiveCharacterTextSplitter` (500 char chunk size, 100 char overlap), and vector embedding generation via `GoogleGenerativeAIEmbeddings` (3072 dimensions).
+- 🗄️ **PostgreSQL + pgvector**: In-database cosine distance similarity search (`1 - cosine_distance`) directly integrated via SQLAlchemy 2.0.
+- 🔗 **LangChain LCEL RAG Pipeline**: Declarative chain architecture (`RunnableParallel`, `RunnablePassthrough`) connecting vector retrieval to Gemini 3.6 Flash with zero-hallucination prompt guardrails.
+- 📊 **Real-Time Cost & Token Analytics**: Live tracking of prompt tokens, completion tokens, latency, and exact financial cost calculation based on Gemini standard pricing ($0.75 / 1M input, $3.75 / 1M output).
+- 🧠 **Executive AI Insights**: Automated, AI-generated periodic summaries for Organization Administrators analyzing token consumption, employee usage patterns, and cost optimization recommendations.
+- 💻 **Modern Next.js Dashboard**: High-performance UI built with Next.js 15, TypeScript, and Tailwind CSS.
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TD
+    subgraph Client ["Frontend (Next.js 15)"]
+        UI[User Dashboard & Chat Interface]
+    end
+
+    subgraph API ["Backend API (FastAPI)"]
+        Auth[JWT & RBAC Middleware]
+        DocEndpoint["/documents/upload Endpoint"]
+        AskEndpoint["/ask RAG Endpoint"]
+        AnalyticsEndpoint["/admin/analytics Endpoint"]
+    end
+
+    subgraph Storage ["Cloud & DB Infrastructure"]
+        S3[(Supabase Storage)]
+        PG[(PostgreSQL + pgvector)]
+    end
+
+    subgraph AI ["AI Engine (LangChain + Gemini)"]
+        Loader[PyPDFLoader & Text Splitter]
+        Embedder[GoogleGenerativeAIEmbeddings]
+        LLM[Gemini 3.6 Flash LLM]
+    end
+
+    UI -->|1. Upload PDF + JWT| Auth
+    Auth --> DocEndpoint
+    DocEndpoint -->|2. Save Raw PDF| S3
+    DocEndpoint -->|3. Trigger Background Task| Loader
+    Loader -->|4. Generate Chunks| Embedder
+    Embedder -->|5. Store 3072-Dim Vectors| PG
+
+    UI -->|6. Ask Question + JWT| AskEndpoint
+    AskEndpoint -->|7. Embed Query & Search Cosine Similarity| PG
+    PG -->|8. Return Top-K Chunks| LLM
+    LLM -->|9. Generate Grounded Answer| UI
+    AskEndpoint -->|10. Audit Tokens & Latency| PG
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Description |
+| :--- | :--- | :--- |
+| **Backend API** | FastAPI, Uvicorn, Pydantic v2 | High-performance Python web framework with async support and automatic OpenAPI docs |
+| **Database & ORM** | PostgreSQL, `pgvector`, SQLAlchemy 2.0, Alembic | Relational database with vector extension for cosine distance queries and migration management |
+| **AI & RAG Engine** | LangChain (LCEL), `gemini-3.6-flash`, `gemini-embedding-001` | Document chunking, vector embedding, and context-bounded LLM generation |
+| **Cloud Storage** | Supabase Storage SDK | Secure PDF file storage scoped by organization path |
+| **Security** | PyJWT, `pwdlib` (Argon2 / Bcrypt) | JWT Bearer token authentication with password hashing |
+| **Frontend UI** | Next.js 15 (App Router), TypeScript, Tailwind CSS | Responsive dashboard with authentication state management and analytics charts |
+
+---
+
+## 📊 Database Schema & Vector Search
+
+The application uses SQLAlchemy 2.0 mapped models with a dedicated `VECTOR(3072)` column for storing vector representations.
+
+```
++------------------+         +-------------------+         +--------------------+
+|  organizations   | 1     * |       users       | 1     * |     documents      |
++------------------+---------+-------------------+---------+--------------------+
+| id (PK)          |         | id (PK)           |         | id (PK)            |
+| name             |         | organization_id   |         | organization_id    |
+| created_at       |         | email             |         | uploaded_by (FK)   |
++------------------+         | password_hash     |         | filename           |
+                             | role (ADMIN/EMP)  |         | storage_key        |
+                             +-------------------+         | status             |
+                                                           +--------------------+
+                                                                     | 1
+                                                                     | *
++------------------+         +-------------------+         +--------------------+
+|   ai_requests    |         |  document_chunks  |         |  document_chunks   |
++------------------+         +-------------------+         +--------------------+
+| id (PK)          |         | id (PK)           |         | content (Text)     |
+| organization_id  |         | document_id (FK)  |         | embedding          |
+| user_id (FK)     |         | chunk_index       |         | VECTOR(3072)       |
+| question         |         +-------------------+         +--------------------+
+| total_tokens     |
+| estimated_cost   |
++------------------+
+```
+
+### Vector Similarity Search Query
+Vector search is performed directly inside PostgreSQL using the `pgvector` extension:
+
+$$\text{Similarity} = 1 - \text{CosineDistance}(V_{\text{chunk}}, V_{\text{query}})$$
+
+```python
+results = (
+    db.query(
+        DocumentChunk,
+        (1 - DocumentChunk.embedding.cosine_distance(query_embedding)).label("similarity")
+    )
+    .filter(DocumentChunk.document_id == document_id)
+    .order_by(DocumentChunk.embedding.cosine_distance(query_embedding))
+    .limit(top_k)
+    .all()
+)
+```
+
+---
+
+## 📁 Project Structure
+
+```
 DocMindAI/
-
-│
-
 ├── backend/
-
-│   │
-
+│   ├── alembic/                 # Alembic database migrations
 │   ├── app/
-
-│   │   ├── langchain/
-
-│   │   │   ├── document\_loader.py
-
+│   │   ├── langchain/           # LangChain LCEL RAG components
+│   │   │   ├── document_loader.py
 │   │   │   ├── embeddings.py
-
-│   │   │   ├── rag\_chain.py
-
+│   │   │   ├── rag_chain.py
 │   │   │   ├── retriever.py
-
 │   │   │   └── spilitter.py
-
-│   │   │
-
-│   │   ├── analytics.py
-
-│   │   ├── database.py
-
-│   │   ├── documents\_processor.py
-
-│   │   ├── insights.py
-
-│   │   ├── llm.py
-
-│   │   ├── main.py
-
-│   │   ├── models.py
-
-│   │   ├── rag.py
-
-│   │   ├── schemas.py
-
-│   │   ├── security.py
-
-│   │   └── storage.py
-
-│   │
-
-│   ├── alembic/
-
-│   │   └── versions/
-
-│   │
-
+│   │   ├── analytics.py         # Cost & token tracking module
+│   │   ├── database.py          # SQLAlchemy engine & session setup
+│   │   ├── documents_processor.py # Async PDF processing pipeline
+│   │   ├── insights.py          # AI Executive Insights generator
+│   │   ├── llm.py               # Gemini LLM & RAG prompt template
+│   │   ├── main.py              # FastAPI application & route definitions
+│   │   ├── models.py            # SQLAlchemy database models (pgvector)
+│   │   ├── schemas.py           # Pydantic request/response schemas
+│   │   ├── security.py          # JWT authentication & RBAC dependencies
+│   │   └── storage.py           # Supabase Storage client
+│   ├── .env.example             # Backend environment template
 │   ├── Dockerfile
-
-│   ├── requirements.txt
-
-│   └── alembic.ini
-
-│
-
+│   └── requirements.txt
 ├── frontend/
-
-│   │
-
-│   ├── app/
-
+│   ├── app/                     # Next.js App Router pages
 │   │   ├── login/
-
 │   │   ├── signup/
-
-│   │   └── workspace/
-
-│   │       ├── admin/
-
-│   │       │   ├── analytics/
-
-│   │       │   ├── employee/
-
-│   │       │   ├── insights/
-
-│   │       │   └── layout.tsx
-
-│   │       ├── chat/
-
-│   │       ├── documents/
-
-│   │       ├── profile/
-
-│   │       └── layout.tsx
-
-│   │
-
+│   │   └── workspace/           # Protected Admin & Document workspace
 │   ├── lib/
-
-│   │   └── api.ts
-
-│   │
-
-│   ├── Dockerfile
-
+│   │   └── api.ts               # Frontend API client library
+│   ├── .env.example             # Frontend environment template
 │   ├── package.json
-
-│   └── next.config.ts
-
-│
-
-├── .gitignore
-
+│   └── tsconfig.json
+├── DocMind_AI_Project_Revision_Guide.pdf # Project revision & viva document
 └── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+
+- **Python**: 3.11+
+- **Node.js**: 18.x or 20.x
+- **PostgreSQL**: Version 15+ with [`pgvector`](https://github.com/pgvector/pgvector) installed
+- **Supabase Account**: For PDF cloud storage bucket
+- **Google Gemini API Key**: For embedding generation and RAG reasoning
+
+---
 
-🔒 Security
+### 2. Backend Setup
 
+1. **Navigate to the backend folder**:
+   ```bash
+   cd backend
+   ```
 
+2. **Create and activate a virtual environment**:
+   ```bash
+   python -m venv .venv
+   # Windows:
+   .venv\Scripts\activate
+   # Linux/macOS:
+   source .venv/bin/activate
+   ```
 
-DocMind AI implements multiple layers of security.
+3. **Install backend dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
+4. **Configure environment variables**:
+   Copy `.env.example` to `.env` and fill in your credentials:
+   ```bash
+   cp .env.example .env
+   ```
+   *Set `DATABASE_URL`, `JWT_SECRET`, `GEMINI_API_KEY`, `SUPABASE_URL`, and `SUPABASE_KEY`.*
 
+5. **Run database migrations**:
+   ```bash
+   alembic upgrade head
+   ```
 
-Authentication
+6. **Start the FastAPI server**:
+   ```bash
+   uvicorn app.main:app --reload --port 8000
+   ```
+   *FastAPI interactive docs will be available at `http://localhost:8000/docs`.*
 
+---
 
+### 3. Frontend Setup
 
-JWT tokens are used to authenticate users accessing protected backend endpoints.
+1. **Navigate to the frontend folder**:
+   ```bash
+   cd ../frontend
+   ```
 
+2. **Install frontend dependencies**:
+   ```bash
+   npm install
+   ```
 
+3. **Configure environment variables**:
+   Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
 
-Password Security
+4. **Start the Next.js development server**:
+   ```bash
+   npm run dev
+   ```
+   *Open `http://localhost:3000` in your web browser.*
 
+---
 
+## 📡 API Reference
 
-Passwords are stored as hashed values rather than plain text.
+### Authentication
+- `POST /auth/register` — Register a new Organization & Admin account.
+- `POST /auth/login` — Authenticate and receive a JWT bearer token.
 
+### User & Employee Management
+- `GET /users/me` — Retrieve logged-in user profile.
+- `POST /users/employees` — Admin endpoint to register new employee accounts.
+- `GET /users/employees` — List all employees belonging to the admin's organization.
 
+### Documents & Search
+- `POST /documents/upload` — Upload PDF file (triggger asynchronous background processing).
+- `GET /documents` — List all documents belonging to the organization.
+- `POST /search` — Perform vector similarity search over document chunks.
+- `POST /ask` — Execute end-to-end RAG question answering.
 
-Role-Based Access
+### Admin Analytics & Insights
+- `GET /admin/analytics?days=30` — Aggregate total requests, token counts, costs, latency, and breakdown by model/user.
+- `GET /admin/insights?days=30` — Generate AI executive summary report of organization usage.
 
+---
 
+## 💰 Token & Cost Analytics
 
-Administrator functionality is protected using backend authorization.
+DocMind AI monitors LLM expenses using exact token counts returned from the Gemini API:
 
+| Metric | Cost per Million Tokens |
+| :--- | :--- |
+| **Input (Prompt) Tokens** | $0.75 |
+| **Output (Completion) Tokens** | $3.75 |
 
+Every query logged in `ai_requests` records latency, exact token usage, and computed financial cost, enabling organization admins to track consumption and set budgetary limits.
 
-ADMIN
+---
 
-&#x20; │
+## 📄 Project Revision Document
 
-&#x20; ├── Workspace
+For code walkthroughs, viva interview questions, and detailed system design concepts, check out the generated revision guide:
+📌 **[`DocMind_AI_Project_Revision_Guide.pdf`](./DocMind_AI_Project_Revision_Guide.pdf)**
 
-&#x20; ├── Documents
+---
 
-&#x20; ├── Analytics
+## 🤝 Contributing
 
-&#x20; ├── AI Insights
+Contributions are welcome! Feel free to open an issue or submit a pull request if you find bugs or want to add new features.
 
-&#x20; └── Employee Management
+---
 
+## 📜 License
 
-
-EMPLOYEE
-
-&#x20; │
-
-&#x20; ├── Workspace
-
-&#x20; ├── Documents
-
-&#x20; └── AI Chat
-
-Organization Isolation
-
-
-
-Backend queries use the authenticated user's organization ID to restrict access to organization-specific resources.
-
-
-
-Frontend route protection is used as an additional layer, while the backend remains the primary security boundary.
-
-
-
-🐳 Docker
-
-
-
-Both the backend and frontend are containerized.
-
-
-
-Backend
-
-
-
-Build:
-
-
-
-docker build -t docmind-backend .
-
-
-
-Run:
-
-
-
-docker run --name docmind-backend -p 8000:8000 --env-file .env docmind-backend
-
-Frontend
-
-
-
-Build:
-
-
-
-docker build -t docmind-frontend .
-
-
-
-Run:
-
-
-
-docker run --name docmind-frontend -p 3000:3000 docmind-frontend
-
-🔑 Environment Variables
-
-
-
-Sensitive environment variables are kept outside the Git repository.
-
-
-
-Example:
-
-
-
-DATABASE\_URL=
-
-SUPABASE\_URL=
-
-SUPABASE\_KEY=
-
-GEMINI\_API\_KEY=
-
-JWT\_SECRET=
-
-NEXT\_PUBLIC\_API\_URL=
-
-
-
-Actual credentials should never be committed to GitHub.
-
-
-
-🗃️ Database Migrations
-
-
-
-DocMind AI uses Alembic for database schema migrations.
-
-
-
-Example:
-
-
-
-alembic upgrade head
-
-
-
-Migrations are used to version and manage changes to the database schema, including:
-
-
-
-Organizations
-
-Users
-
-Documents
-
-Document chunks
-
-Embeddings
-
-AI request analytics
-
-Organization-scoped user IDs
-
-💻 Local Development
-
-Backend
-
-
-
-Create and activate a Python virtual environment:
-
-
-
-python -m venv .venv
-
-
-
-Activate it on Windows:
-
-
-
-.venv\\Scripts\\Activate.ps1
-
-
-
-Install dependencies:
-
-
-
-pip install -r requirements.txt
-
-
-
-Run FastAPI:
-
-
-
-uvicorn app.main:app --reload
-
-
-
-The API will be available at:
-
-
-
-http://localhost:8000
-
-Frontend
-
-
-
-Install dependencies:
-
-
-
-npm install
-
-
-
-Run the development server:
-
-
-
-npm run dev
-
-
-
-The frontend will be available at:
-
-
-
-http://localhost:3000
-
-📈 Current Project Status
-
-
-
-DocMind AI currently includes:
-
-
-
-✅ User registration
-
-✅ User login
-
-✅ JWT authentication
-
-✅ Organization creation
-
-✅ Multi-tenant architecture
-
-✅ Organization-scoped user IDs
-
-✅ Employee creation
-
-✅ Employee listing
-
-✅ Role-based authorization
-
-✅ Protected workspace
-
-✅ Admin-only routes
-
-✅ PDF upload
-
-✅ Supabase Storage
-
-✅ Document processing
-
-✅ Document chunking
-
-✅ Embeddings
-
-✅ RAG pipeline
-
-✅ LangChain integration
-
-✅ AI question answering
-
-✅ AI request analytics
-
-✅ Admin analytics dashboard
-
-✅ AI insights
-
-✅ Backend Dockerization
-
-✅ Frontend Dockerization
-
-✅ Database migrations with Alembic
-
-✅ Git/GitHub version control
-
-🔮 Future Improvements
-
-
-
-Potential future improvements include:
-
-
-
-Advanced RAG evaluation
-
-RAGAS-based evaluation pipelines
-
-Prompt injection protection
-
-PII detection and protection
-
-Improved document ingestion
-
-Background job queues
-
-Advanced observability
-
-Token and cost monitoring
-
-Cloud database optimization
-
-Cloud object storage optimization
-
-More granular organization permissions
-
-Enterprise audit logs
-
-Production-scale deployment
-
-🎯 Project Goal
-
-
-
-The goal of DocMind AI is to move beyond a simple document chatbot and build an enterprise-oriented document intelligence platform.
-
-
-
-The project focuses on combining:
-
-
-
-Multi-Tenancy
-
-&#x20;     +
-
-Authentication
-
-&#x20;     +
-
-Authorization
-
-&#x20;     +
-
-Document Processing
-
-&#x20;     +
-
-RAG
-
-&#x20;     +
-
-LLM
-
-&#x20;     +
-
-Analytics
-
-&#x20;     +
-
-AI Insights
-
-&#x20;     +
-
-Docker
-
-
-
-into a single full-stack AI system.
-
-
-
-👨‍💻 Author
-
-
-
-Zoheb Qureshi
-
-
-
-AI Engineer | Computer Science Student
-
-
-
-GitHub:
-
-https://github.com/zohebqureshimz-pixel
-
-
-
-LinkedIn:
-
-https://www.linkedin.com/in/zoheb-qureshi/
-
-
-
-⭐ If you find the project interesting, feel free to explore the code and architecture.
-
+Distributed under the MIT License. See `LICENSE` for more information.
